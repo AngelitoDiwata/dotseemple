@@ -19,8 +19,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
     color: white;
+}
+
+.App-header>.genesis {
+    transition: all;
+    transition-duration: 0.3s;
+    color: white;
+    font-size: 70px;
+}
+
+.App-header>.genesis:hover {
+    transition: all;
+    transition-duration: 0.5s;
+    font-size: 100px;
 }
 
 .App-link {

@@ -1,43 +1,82 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Particles from "react-particles";
-import { loadFull } from "tsparticles";
-import logo from './logo.svg';
+import { loadLinksPreset } from "tsparticles-preset-links";
 import './App.css';
-import particlesOptions from "./particles.json";
 
 function App() {
-    const particlesInit = useCallback(main => {
-        loadFull(main);
+
+    const [particleOptions, setParticleOptions] = useState({
+        "background": {
+            "color": {
+                "value": "#000000"
+            }
+        },
+        "preset": "links",
+        "particles": {
+            "color": {
+                "value": "#ffffff"
+            },
+            "links": {
+                "color": "#ffffff",
+                "distance": 100,
+                "enable": true,
+                "opacity": 1,
+                "width": 0.2
+            },
+            "collisions": {
+                "enable": false
+            },
+            "number": {
+                "density": {
+                    "enable": false,
+                    "area": 1000
+                },
+                "value": 150
+            },
+            "move": {
+                "direction": "none",
+                "enable": true,
+                "outModes": {
+                    "default": "bounce"
+                },
+                "random": true,
+                "speed": 0.1,
+                "straight": true
+            },
+            "opacity": {
+                "value": 1
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "size": {
+                "value": {
+                    "min": 0.5,
+                    "max": 1.5
+                }
+            }
+        },
+        "detectRetina": true
+    })
+
+    const particlesInit = useCallback(async main => {
+        return loadLinksPreset(main);
     }, [])
+
+    const agitateStars = async (opts, enter = true) => {
+        opts.particles.move.speed = enter ? 5 : 1
+        setParticleOptions(opts)
+    }
 
     return (
         <div className="App">
-            <Particles options={particlesOptions} init={particlesInit}/>
+            <Particles options={particleOptions} init={particlesInit} />
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <p>
-                    Edit <code>src/particles.json</code> to customize Particles, then save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-                <a
-                    className="App-link"
-                    href="https://particles.js.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    See Particles samples
-                </a>
+                <a onMouseLeave={() =>agitateStars(particleOptions, false)} onMouseEnter={() => agitateStars(particleOptions)} className='genesis' style={{ "textDecoration": "none" }} href="https://bit.ly/let-us-be-frens">--. . -. . ... .. ...</a>
             </header>
+            <footer style={{ position: "absolute", "marginBottom": "10px", "width": "100%", "bottom": "0" }}>
+                <a style={{ color: "white", "textDecoration": "none", "fontSize": "10px" }} href="https://twitter.com/dotseemple">@dotseemple</a>
+            </footer>
         </div>
     );
 }
